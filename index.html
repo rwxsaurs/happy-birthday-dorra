@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAPPY BIRTHDAY DORRA 🎉</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #007786, #00B4B4);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #1a2980;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            background: linear-gradient(to right, #1a2980, #26d0ce);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .password-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+        
+        .password-display {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 24px;
+            letter-spacing: 5px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .password-dots {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        
+        .password-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ddd;
+            transition: all 0.3s;
+        }
+        
+        .password-dot.active {
+            background: #1a2980;
+            transform: scale(1.2);
+        }
+        
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        
+        .keypad-button {
+            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        
+        .keypad-button:hover {
+            background: linear-gradient(to bottom, #e9ecef, #dee2e6);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .keypad-button:active {
+            transform: translateY(0);
+            background: linear-gradient(to bottom, #dee2e6, #ced4da);
+        }
+        
+        .keypad-zero {
+            grid-column: 2;
+        }
+        
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        #hintBtn {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            color: white;
+        }
+        
+        #clearBtn {
+            background: linear-gradient(to right, #6c757d, #adb5bd);
+            color: white;
+        }
+        
+        #copyLinkBtn {
+            background: linear-gradient(to right, #00b09b, #96c93d);
+            color: white;
+            margin-top: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .video-section {
+            display: none;
+            margin-top: 30px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        #videoPlayer {
+            width: 100%;
+            height: 400px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            border: none;
+        }
+        
+        .hint-box {
+            background: linear-gradient(to right, #fffde4, #fff);
+            border: 2px dashed #ff7e5f;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            display: none;
+            border-radius: 10px;
+            animation: slideIn 0.5s ease;
+        }
+        
+        .message {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 10px;
+            display: none;
+            font-weight: bold;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .error {
+            background: #ffeaea;
+            color: #d32f2f;
+            border: 2px solid #ffcdd2;
+        }
+        
+        .success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #c8e6c9;
+        }
+        
+        .link-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #e3f2fd;
+            border-radius: 15px;
+            display: none;
+        }
+        
+        #shareLink {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #90caf9;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .instructions {
+            background: #f1f8ff;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 30px;
+            text-align: left;
+        }
+        
+        .instructions h3 {
+            color: #1a2980;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+            color: #555;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            color: #777;
+            font-size: 14px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .keypad-button {
+                padding: 15px;
+                font-size: 20px;
+            }
+            
+            .control-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Happy Birthday Andorra</h1>
+        <p class="subtitle">Gunakan keypad untuk memasukkan password</p>
+        
+        <div class="password-section">
+            <div class="password-display" id="passwordDisplay">
+                <span id="passwordDots"></span>
+            </div>
+            
+            <div class="keypad">
+                <div class="keypad-button" onclick="addNumber(1)">1</div>
+                <div class="keypad-button" onclick="addNumber(2)">2</div>
+                <div class="keypad-button" onclick="addNumber(3)">3</div>
+                <div class="keypad-button" onclick="addNumber(4)">4</div>
+                <div class="keypad-button" onclick="addNumber(5)">5</div>
+                <div class="keypad-button" onclick="addNumber(6)">6</div>
+                <div class="keypad-button" onclick="addNumber(7)">7</div>
+                <div class="keypad-button" onclick="addNumber(8)">8</div>
+                <div class="keypad-button" onclick="addNumber(9)">9</div>
+                <div class="keypad-button keypad-zero" onclick="addNumber(0)">0</div>
+            </div>
+            
+            <div class="control-buttons">
+                <button id="clearBtn" onclick="clearPassword()">🗑️ Hapus</button>
+                <button id="hintBtn" onclick="showHint()">💡 Hint</button>
+            </div>
+        </div>
+        
+        <div id="message" class="message"></div>
+        
+        <div class="hint-box" id="hintBox">
+            <strong>🔍 Hint: 10 digit angka</strong>
+            <p>Password: <span style="color: #d32f2f; font-weight: bold;">_ _ - _ _ / _ _ / _ _ _ _</span></p>
+
+        </div>
+        
+        <div class="video-section" id="videoSection">
+            
+            <iframe 
+                id="videoPlayer" 
+                src="" 
+                frameborder="0" 
+                allow="autoplay; encrypted-media" 
+                allowfullscreen>
+            </iframe>
+            
+            <p style="color: #666; margin-top: 15px;">
+                🎉 Special birthday video for you 🎉
+            </p>
+        </div>
+        
+        
+        <div class="footer">
+            <p>Konten bisa diakses dengan password yang benar</p>
+        </div>
+    </div>
+
+    <script>
+        // ================= KONFIGURASI =================
+        const correctPassword = "2011022026"; // 10 digit
+        const maxDigits = 10;
+        let enteredPassword = "";
+        
+        // Link website Anda
+        let websiteLink = window.location.href;
+        
+        // Video dari Google Drive
+        const driveVideoId = "1aHOj67th88_qZBdh--XA-FOVPwjMjQlZ";
+        const videoEmbedUrl = `https://drive.google.com/file/d/${driveVideoId}/preview`;
+        
+        // ================= ELEMEN DOM =================
+        const passwordDisplay = document.getElementById('passwordDots');
+        const messageDiv = document.getElementById('message');
+        const videoSection = document.getElementById('videoSection');
+        const hintBox = document.getElementById('hintBox');
+        const videoPlayer = document.getElementById('videoPlayer');
+        const shareLinkInput = document.getElementById('shareLink');
+        
+        // ================= INISIALISASI =================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inisialisasi tampilan password dots
+            updatePasswordDisplay();
+            
+            // Set share link
+            shareLinkInput.value = websiteLink;
+        });
+        
+        // ================= FUNGSI KEYPAD =================
+        function addNumber(number) {
+            if (enteredPassword.length >= maxDigits) {
+                showError("❌ Wrong! Password maksimal 10 digit!");
+                shakeKeypad();
+                return;
+            }
+            
+            enteredPassword += number.toString();
+            updatePasswordDisplay();
+            
+            // Jika sudah 10 digit, auto-submit
+            if (enteredPassword.length === maxDigits) {
+                setTimeout(checkPassword, 300);
+            }
+        }
+        
+        function clearPassword() {
+            enteredPassword = "";
+            updatePasswordDisplay();
+            resetMessages();
+        }
+        
+        function updatePasswordDisplay() {
+            // Tampilkan dots
+            const dotsCount = enteredPassword.length;
+            passwordDisplay.textContent = "•".repeat(dotsCount);
+        }
+        
+        // ================= FUNGSI UTAMA =================
+        function checkPassword() {
+            resetMessages();
+            
+            // Validasi panjang password
+            if (enteredPassword.length !== maxDigits) {
+                showError(`❌ Password harus ${maxDigits} digit!`);
+                shakeKeypad();
+                return;
+            }
+            
+            // Cek password
+            if (enteredPassword === correctPassword) {
+                // SUCCESS
+                showMessage('✅ Password benar!', 'success');
+                videoSection.style.display = 'block';
+                hintBox.style.display = 'none';
+                
+                // Load video
+                videoPlayer.src = videoEmbedUrl;
+                
+                // Scroll ke video
+                setTimeout(() => {
+                    videoSection.scrollIntoView({ behavior: 'smooth' });
+                }, 500);
+                
+                
+            } else {
+                // FAILED
+                showError('❌ Wrong! Password salah!');
+                shakeKeypad();
+                clearPassword();
+            }
+        }
+        
+        function showHint() {
+            hintBox.style.display = 'block';
+            hintBox.scrollIntoView({ behavior: 'smooth' });
+            
+            // Auto hide hint setelah 30 detik
+            setTimeout(() => {
+                hintBox.style.display = 'none';
+            }, 30000);
+        }
+        
+        function copyLink() {
+            shareLinkInput.select();
+            shareLinkInput.setSelectionRange(0, 99999);
+            
+            try {
+                navigator.clipboard.writeText(shareLinkInput.value).then(() => {
+                    const copyBtn = document.getElementById('copyLinkBtn');
+                    const originalText = copyBtn.innerHTML;
+                    copyBtn.innerHTML = '✅ Link Disalin!';
+                    copyBtn.style.background = 'linear-gradient(to right, #4CAF50, #8BC34A)';
+                    
+                    setTimeout(() => {
+                        copyBtn.innerHTML = originalText;
+                        copyBtn.style.background = 'linear-gradient(to right, #00b09b, #96c93d)';
+                    }, 2000);
+                });
+            } catch (err) {
+                document.execCommand('copy');
+                alert('Link telah disalin!');
+            }
+        }
+        
+        // ================= FUNGSI BANTUAN =================
+        function showMessage(text, type) {
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+        }
+        
+        function showError(text) {
+            showMessage(text, 'error');
+        }
+        
+        function resetMessages() {
+            messageDiv.style.display = 'none';
+            messageDiv.className = 'message';
+        }
+        
+        function shakeKeypad() {
+            const keypad = document.querySelector('.keypad');
+            keypad.style.animation = 'none';
+            setTimeout(() => {
+                keypad.style.animation = 'shake 0.5s';
+            }, 10);
+            
+            setTimeout(() => {
+                keypad.style.animation = '';
+            }, 500);
+        }
+        
+        // ================= EVENT LISTENERS =================
+        // Keyboard support untuk angka
+        document.addEventListener('keydown', function(event) {
+            const key = event.key;
+            
+            if (key >= '0' && key <= '9') {
+                addNumber(parseInt(key));
+                event.preventDefault();
+            } else if (key === 'Enter') {
+                checkPassword();
+                event.preventDefault();
+            } else if (key === 'Backspace' || key === 'Delete') {
+                clearPassword();
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
